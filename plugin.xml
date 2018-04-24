@@ -2,7 +2,7 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 xmlns:android="http://schemas.android.com/apk/res/android"
-           id="cordova-plugin-mas-core"
+           id="cordova-plugin-mas-cli-core"
       version="0.1.0">
     <name>MAS</name>
     <description>Cordova MAS Plugin</description>
