@@ -1,0 +1,30 @@
+{
+  "name": "cordova-plugin-mas-cli-core",
+  "version": "1.6.10",
+  "description": "Cordova MAS Plugin",
+  "cordova": {
+    "id": "cordova-plugin-mas-cli-core",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ysd24/Cordova-MAS-CLI-Foundation.git"
+  },
+  "keywords": [
+    "cordova",
+    "MAS",
+    "CA Technologies",
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android"
+  ],
+  "author": "CA Technologies Ltd.",
+  "license": "CA Technologies Ltd.",
+  "bugs": {
+    "url": "https://github.com/ysd24/Cordova-MAS-CLI-Foundation/issues"
+  },
+  "homepage": "https://github.com/ysd24/Cordova-MAS-CLI-Foundation#readme"
+}
