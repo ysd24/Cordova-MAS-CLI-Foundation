@@ -15,7 +15,7 @@
   },
   "keywords": [
     "cordova",
-    "MAS",
+    "cordova-plugin-mas-cli-core",
     "CA Technologies",
     "ecosystem:cordova",
     "cordova-ios",
