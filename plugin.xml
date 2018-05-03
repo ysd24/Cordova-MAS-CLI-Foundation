@@ -4,7 +4,7 @@
 xmlns:android="http://schemas.android.com/apk/res/android"
            id="cordova-plugin-mas-cli-core"
       version="0.1.0">
-    <name>MAS</name>
+    <name>MAS CLI</name>
     <description>Cordova MAS Plugin</description>
     <license>CA Technologies Ltd.</license>
     <keywords>cordova, MAS, CA Technologies</keywords>
