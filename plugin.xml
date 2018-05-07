@@ -9,6 +9,10 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     <license>CA Technologies Ltd.</license>
     <keywords>cordova, MAS, CA Technologies</keywords>
 
+    <engines>
+        <engine name="cocoapods" version=">=1.4.0"  platform="ios" />
+    </engines>
+
     <js-module src="www/MASPlugin.js" name="MASPlugin">
         <clobbers target="MASPlugin" />
     </js-module>
@@ -103,7 +107,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         <source-file src="src/ios/WebViewController.m" />
         <resource-file src="src/ios/EnterpriseBrowser.storyboard" />
         
-        <framework version='9.0' src="MASFoundation" type="podspec" spec="~> 1.6.10" />
+        <framework src="MASFoundation" type="podspec" spec="~> 1.6.10" />
 
     </platform>
 
