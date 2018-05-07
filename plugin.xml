@@ -9,10 +9,6 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     <license>CA Technologies Ltd.</license>
     <keywords>cordova, MAS, CA Technologies</keywords>
 
-    <engines>
-        <engine name="cocoapods" version=">=1.4.0"  platform="ios" />
-    </engines>
-
     <js-module src="www/MASPlugin.js" name="MASPlugin">
         <clobbers target="MASPlugin" />
     </js-module>
