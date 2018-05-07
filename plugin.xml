@@ -64,6 +64,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     <!-- iOS -->
     <platform name="ios">
         <config-file target="config.xml" parent="/*" >
+            <preference name="deployment-target" value="9.0"/>
             <feature name="MASPluginMAS" >
                 <param name="ios-package" value="MASPluginMAS"/>
             </feature>
