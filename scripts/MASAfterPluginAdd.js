@@ -13,7 +13,7 @@ module.exports = function(context) {
 
 	if (fs.existsSync('platforms/ios/ios.json')) {
 	    
-	    var path = resolve(msso_config_);
+	    var path = resolve(msso_config_path);
 
 		// Abort if the msso config path doesn't exist...
 		if (!fs.existsSync(path)) {
