@@ -1,25 +1,30 @@
 var fs          = require('fs'),
-    chalk       = require('chalk'),
-    plist       = require('plist'),
-    shell       = require('shelljs'),
-    fileHound   = require('filehound'),
-    resolve     = require('path').resolve,
-    xcode       = require('node-xcode-opifex');
+chalk       = require('chalk'),
+plist       = require('plist'),
+shell       = require('shelljs'),
+fileHound   = require('filehound'),
+resolve     = require('path').resolve,
+xcode       = require('node-xcode-opifex');
 
-module.exports = function(ctx) {
+module.exports = function(context) {
 
-    // Get the absolute path.
-        var path = resolve('~/MAS_Config/msso_config.json');
-      
-        // Abort if the msso config path doesn't exist...
-        if (!fs.existsSync(path)) {
+	var msso_config_path = context.cmdLine[context.cmdLine.length - 1];
+	console.log('msso config path :' + msso_config_path);
 
-            console.log('\n' + 'Config file does not exist @ path : ' + path + '\n');
+	if (fs.existsSync('platforms/ios/ios.json')) {
+	    
+	    var path = resolve(msso_config_);
 
-            return;
-        }
+		// Abort if the msso config path doesn't exist...
+		if (!fs.existsSync(path)) {
 
-        //
+		    console.log('\n' + 'Config file does not exist @ path : ' + path + '\n');
+
+		    return;
+		}
+
+
+		//
         //  Configure authorization for location services. 
         //
         fileHound.create()
@@ -39,31 +44,32 @@ module.exports = function(ctx) {
                     
                     fs.writeFileSync(file, plist.build(infoPlist));
 
-                    program.successMessage('\n' + 'Successfully configured authorization for iOS location services.' + '\n');
+                    console.log('\n' + 'Successfully configured authorization for iOS location services.' + '\n');
                 });
             });
 
-        //
-        //  Configure MAS iOS project with msso_config.json.
-        //
-        fileHound.create()
-            .paths('./platforms/ios/')
-            .depth(0)
-            .ext('pbxproj')
-            .find()
-            .then(files => {
-                files.forEach(file => {
-                    var appProj = xcode.project(file);
-                    
-                    appProj.parse(function (err) {
 
-                        appProj.addResourceFile(path);
+		//
+		//  Configure MAS iOS project with msso_config.json.
+		//
+		fileHound.create()
+		    .paths('./platforms/ios/')
+		    .depth(0)
+		    .ext('pbxproj')
+		    .find()
+		    .then(files => {
+		        files.forEach(file => {
+		            var appProj = xcode.project(file);
+		            
+		            appProj.parse(function (err) {
 
-                        fs.writeFileSync(file, appProj.writeSync());
+		                appProj.addResourceFile(path);
 
-                        program.handleSuccess('\n' + 'Successfully configured ' + platform + ' cordova project with : ' + path + '\n');
-                    });
-                });
-            });
-    }
+		                fs.writeFileSync(file, appProj.writeSync());
+
+		                console.log('\n' + 'Successfully configured ' + ' cordova project with : ' + path + '\n');
+		            });
+		        });
+		    });
+	}
 };
