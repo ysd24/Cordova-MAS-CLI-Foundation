@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-mas-cli-core",
-  "version": "1.6.21",
+  "version": "1.6.22",
   "description": "Cordova MAS Plugin",
   "cordova": {
     "id": "cordova-plugin-mas-cli-core",
@@ -33,9 +33,9 @@
     "commander": "^2.9.0",
     "figlet": "^1.2.0",
     "filehound": "^1.16.2",
-    "node-xcode-opifex": "^0.8.5",
     "plist": "^3.0.1",
+    "prompt": "^0.2.14",
     "shelljs": "^0.8.1",
-    "prompt": "^0.2.14"
+    "xcode": "^1.0.0"
   }
 }
