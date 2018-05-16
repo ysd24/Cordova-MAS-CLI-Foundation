@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-mas-cli-core",
-  "version": "1.6.22",
+  "version": "1.6.23",
   "description": "Cordova MAS Plugin",
   "cordova": {
     "id": "cordova-plugin-mas-cli-core",

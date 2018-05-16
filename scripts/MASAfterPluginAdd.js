@@ -1,4 +1,4 @@
-var fs          = require('fs'),
+var fs      = require('fs'),
 chalk       = require('chalk'),
 plist       = require('plist'),
 shell       = require('shelljs'),
