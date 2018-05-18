@@ -1,26 +1,22 @@
 var fs      = require('fs'),
-chalk       = require('chalk'),
 plist       = require('plist'),
-shell       = require('shelljs'),
 fileHound   = require('filehound'),
 resolve     = require('path').resolve,
 xcode       = require('xcode');
 
 module.exports = function(context) {
 
-	if (fs.existsSync('platforms/ios/ios.json')) {
-	    
-	    var path = require('os').homedir() + '/MAS_Config/msso_config.json';
+    if (fs.existsSync('platforms/ios/ios.json')) {
+        
+        var path = require('os').homedir() + '/MAS_Config/msso_config.json';
 
-		// Abort if the msso config path doesn't exist...
-		if (!fs.existsSync(path)) {
+        // Abort if the msso config path doesn't exist...
+        if (!fs.existsSync(path)) {
 
-		    console.log('\n' + 'Config file does not exist @ path : ' + path + '\n');
+            throw '\n' + 'Config file does not exist @ path : ' + path + '\n';
+        }
 
-		    return;
-		}
-
-		//
+        //
         //  Configure authorization for location services. 
         //
         fileHound.create()
@@ -45,22 +41,22 @@ module.exports = function(context) {
             });
 
 
-		//
+        //
         //  Configure MAS iOS project with msso_config.json.
         //  Add Run script to remove the simulator file that is required to successfully deploy your app to the Apple Store.
         //
-		fileHound.create()
-		    .paths('./platforms/ios/')
-		    .depth(0)
-		    .ext('pbxproj')
-		    .find()
-		    .then(files => {
-		        files.forEach(file => {
-		            var appProj = xcode.project(file);
-		            
-		            appProj.parse(function (err) {
+        fileHound.create()
+            .paths('./platforms/ios/')
+            .depth(0)
+            .ext('pbxproj')
+            .find()
+            .then(files => {
+                files.forEach(file => {
+                    var appProj = xcode.project(file);
+                    
+                    appProj.parse(function (err) {
 
-		                //
+                        //
                         //  Add the msso_config.json to resources directory of the XCode project.
                         //
                         appProj.addResourceFile(path);
@@ -73,11 +69,16 @@ module.exports = function(context) {
                         var options = {shellPath: '/bin/sh', shellScript: script};
                         var buildPhase = appProj.addBuildPhase([], 'PBXShellScriptBuildPhase', 'Run a script', appProj.getFirstTarget().uuid, options).buildPhase;
 
-		                fs.writeFileSync(file, appProj.writeSync());
+                        fs.writeFileSync(file, appProj.writeSync());
 
-		                console.log('\n' + 'Successfully configured ' + ' cordova project with : ' + path + '\n');
-		            });
-		        });
-		    });
-	}
+                        console.log('\n' + 'Successfully configured ' + ' cordova project with : ' + path + '\n');
+                    });
+                });
+            });
+    }
+
+    if (fs.existsSync('platforms/ios/android.json')) {
+
+        // Android Hooks go here.
+    }
 };
