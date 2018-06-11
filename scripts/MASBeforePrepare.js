@@ -31,7 +31,7 @@ module.exports = function(context) {
         .then(files => {
           files.forEach(file => {
 
-        var ProjectDir = file.split("/").slice(-2)[0]).split(".")[0];
+        var ProjectDir = (file.split("/").slice(-2)[0]).split(".")[0];
 
         //
         //  Configure authorization for location services. 
