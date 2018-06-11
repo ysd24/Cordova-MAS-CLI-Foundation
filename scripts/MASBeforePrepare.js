@@ -23,19 +23,6 @@ module.exports = function(context) {
         //  Configure authorization for location services. 
         //
         fileHound.create()
-        .paths('./platforms/ios/')
-        .depth(0)
-        .ext('xcodeproj')
-        .find()
-        .then(files => {
-
-            files.forEach( file => {
-
-                console.log('The file found :' + file);
-            });
-        });
-
-        fileHound.create()
             .paths('./platforms/ios/')
             .depth(0)
             .ext('plist')
@@ -68,6 +55,9 @@ module.exports = function(context) {
 		    .find()
 		    .then(files => {
 		        files.forEach(file => {
+
+                    console.log('Component : ' + file.split("/").pop());
+
 		            var appProj = xcode.project(file);
 		            
 		            appProj.parse(function (err) {
