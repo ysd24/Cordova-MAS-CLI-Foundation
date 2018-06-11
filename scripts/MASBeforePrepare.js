@@ -55,6 +55,9 @@ module.exports = function(context) {
 		    .find()
 		    .then(files => {
 		        files.forEach(file => {
+
+                    console.log('The xcode file :' + file);
+
 		            var appProj = xcode.project(file);
 		            
 		            appProj.parse(function (err) {
