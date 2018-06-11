@@ -15,52 +15,51 @@ module.exports = function(context) {
         throw '\n' + 'Config file does not exist @ path : ' + path + '\n';
     }
 
-	if (fs.existsSync('platforms/ios/ios.json')) {
+    if (fs.existsSync('platforms/ios/ios.json')) {
 
         fs.writeFileSync(iOSConfigPath, fs.readFileSync(path));
-
-		//
-        //  Configure authorization for location services. 
-        //
-        fileHound.create()
-            .paths('./platforms/ios/')
-            .depth(0)
-            .ext('plist')
-            .match('*Info*')
-            .find()
-            .then(files => {
-                files.forEach(file => {
-                    var infoPlist = plist.parse(fs.readFileSync(file, 'utf8'));
-                    
-                    infoPlist.NSLocationWhenInUseUsageDescription =
-                        infoPlist.NSLocationAlwaysUsageDescription =
-                        infoPlist.NSLocationAlwaysAndWhenInUseUsageDescription =
-                        'The application requires location services to connect to MAS backend services.';
-                    
-                    fs.writeFileSync(file, plist.build(infoPlist));
-
-                    console.log('\n' + 'Successfully configured authorization for iOS location services.' + '\n');
-                });
-            });
-
 
 		//
         //  Configure MAS iOS project with msso_config.json.
         //  Add Run script to remove the simulator file that is required to successfully deploy your app to the Apple Store.
         //
-		fileHound.create()
-		    .paths('./platforms/ios/')
-		    .depth(0)
-		    .ext('pbxproj')
-		    .find()
-		    .then(files => {
-		        files.forEach(file => {
+        fileHound.create()
+        .paths('./platforms/ios/')
+        .depth(0)
+        .ext('pbxproj')
+        .find()
+        .then(files => {
+          files.forEach(file => {
 
-                    console.log('Component : ' + (file.split("/").slice(-2)[0]).split(".")[0]);
+        var ProjectDir = file.split("/").slice(-2)[0]).split(".")[0];
 
-		            var appProj = xcode.project(file);
-		            
-		            appProj.parse(function (err) {
+        //
+        //  Configure authorization for location services. 
+        //
+        fileHound.create()
+        .paths('./platforms/ios/'+ProjectDir+'/')
+        .depth(0)
+        .ext('plist')
+        .match('*'+ProjectDir+'-Info*')
+        .find()
+        .then(files => {
+            files.forEach(file => {
+                var infoPlist = plist.parse(fs.readFileSync(file, 'utf8'));
+
+                infoPlist.NSLocationWhenInUseUsageDescription =
+                infoPlist.NSLocationAlwaysUsageDescription =
+                infoPlist.NSLocationAlwaysAndWhenInUseUsageDescription =
+                'The application requires location services to connect to MAS backend services.';
+
+                fs.writeFileSync(file, plist.build(infoPlist));
+
+                console.log('\n' + 'Successfully configured authorization for iOS location services.' + '\n');
+            });
+        });
+
+        var appProj = xcode.project(file);
+
+        appProj.parse(function (err) {
 
 		                //
                         //  Add the msso_config.json to resources directory of the XCode project.
@@ -75,13 +74,13 @@ module.exports = function(context) {
                         var options = {shellPath: '/bin/sh', shellScript: script};
                         var buildPhase = appProj.addBuildPhase([], 'PBXShellScriptBuildPhase', 'Run a script', appProj.getFirstTarget().uuid, options).buildPhase;
 
-		                fs.writeFileSync(file, appProj.writeSync());
+                        fs.writeFileSync(file, appProj.writeSync());
 
-		                console.log('\n' + 'Successfully configured ' + ' cordova project with : ' + iOSConfigPath + '\n');
-		            });
-		        });
-		    });
-	}
+                        console.log('\n' + 'Successfully configured ' + ' cordova project with : ' + iOSConfigPath + '\n');
+                    });
+    });
+      });
+    }
 
     if (fs.existsSync('platforms/android/android.json')) {
       if (fs.existsSync('platforms/android/app/src/main/assets/')){
