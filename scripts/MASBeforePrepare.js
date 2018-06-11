@@ -56,7 +56,7 @@ module.exports = function(context) {
 		    .then(files => {
 		        files.forEach(file => {
 
-                    console.log('Component : ' + file.split("/").pop().pop());
+                    console.log('Component : ' + file.split("/").slice(-2)[0];
 
 		            var appProj = xcode.project(file);
 		            
